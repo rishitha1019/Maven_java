@@ -1,0 +1,36 @@
+version: "3.9"
+
+networks:
+  app-net:
+
+volumes:
+  db-data:
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    networks:
+      - app-net
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: demo
+      POSTGRES_PASSWORD: demo
+      POSTGRES_DB: demo_db
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - app-net
+
+  redis:
+    image: redis:alpine
+    networks:
+      - app-net

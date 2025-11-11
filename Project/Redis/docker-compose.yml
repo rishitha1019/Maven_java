@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+app:
+image: rishitha19/hms
+ports: 
+- "7079:7079"
+depends_on:
+- db
+db:
+image: mongo
+container_name: mongoDB
+ports:
+- "27017:27017"
